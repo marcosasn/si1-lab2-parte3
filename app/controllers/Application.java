@@ -1,14 +1,22 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import java.util.List;
 
+import models.GenericDAO;
+import models.Serie;
+import play.*;
+import play.db.jpa.Transactional;
+import play.mvc.*;
 import views.html.*;
 
 public class Application extends Controller {
+	
+	private static GenericDAO dao = new GenericDAO();
 
+	@Transactional
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+		List<Serie> series = dao.findAllByClassName(Serie.class.getName());
+        return ok(index.render("Minhas Séries", series));
     }
 
 }

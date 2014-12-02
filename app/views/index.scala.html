@@ -1,7 +1,17 @@
-@(message: String)
+@(title: String, series: List[Serie])
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message, style = "Java")
+@main(title) {
+	<div class="page-header">
+    	<h2>Séries Cadastradas</h2>
+    </div>
+    @if(series.isEmpty){
+        <p>Nenhuma serie cadastrada</p>
+    } else {
+		<ul>
+		@for(serie <- series) {
+			<li>@serie.getNome</li>
+		}
+		</ul>
+	}
 
 }
