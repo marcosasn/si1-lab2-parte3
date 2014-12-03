@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
+import models.Episodio;
 import models.GenericDAO;
 import models.Serie;
 import play.*;
@@ -21,26 +22,34 @@ public class Global extends GlobalSettings {
 			
 			public void invoke() throws Throwable {
 				
-				//
-				CSVReader reader = new CSVReader(new FileReader("seriesFinalFile.csv"));
-		        String [] nextLine;
-		        List<Serie> series = new ArrayList<Serie>();
-		        while ((nextLine = reader.readNext()) != null) {
-		        	
-		            // nextLine[] is an array of values from the line
-		        	Serie newSerie  = new Serie(nextLine[0]);
-		        	if(!series.contains(newSerie)) {
-		        		series.add(newSerie);
-		        	}
+				List<Serie> seriesDB = dao.findAllByClassName(Serie.class.getName());
+				if(seriesDB.size() == 0) {
+					
+					CSVReader reader = new CSVReader(new FileReader("seriesFinalFile.csv"));
+			        String [] nextLine;
+			        List<Serie> series = new ArrayList<Serie>();
+			        while ((nextLine = reader.readNext()) != null) {
+			        	
+			            // nextLine[] is an array of values from the line
+			        	Serie serie  = new Serie(nextLine[0]);
+			        	int i = series.indexOf(serie);
+			        	if(i >= 0) {
+			        		dao.persist(series.get(i).addEpisodio(nextLine[3], Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[1])));
+			        	} else {
+			        		dao.persist(serie.addEpisodio(nextLine[3], Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[1])));
+			        		series.add(serie);
+			        	}
 
-		        }
-		        
-		        for (int i = 0; i < series.size(); i++) {
-					dao.persist(series.get(i));
+			        }
+			        
+			        for (int i = 0; i < series.size(); i++) {
+						dao.persist(series.get(i));
+					}
+			         
+			        //close reader
+			        reader.close();
 				}
-		         
-		        //close reader
-		        reader.close();
+				
 			}
 		});
 	}

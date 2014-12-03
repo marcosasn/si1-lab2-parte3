@@ -10,23 +10,44 @@
 
 .botao-acoes {
 	padding-left: 5px;
-}
-.meta-totais {
-	font-size: 90%;
-	float: right;
-	margin: 0 0 20px 0;
+	padding-right: 5px;
 }
 .oculto {
 	display: none;
 }
-.list-group-item.active a {
-	color: #FFF;
+.box-serie {
+	border: 1px solid #DDD;
+	padding: 10px;
+	margin: 0 0 10px 0;
 }
-.list-group-item.active .badge {
-	background: #FFF;
-	color: #666;
+.temporada {
+	padding: 10px 0 10px 0;
 }
-.tab-content {
-	padding-top: 35px;
+.red {
+	color: red;
 }
-
+.red:hover {
+	color: red;
+}
+.btn-temporada {
+	margin-bottom: 4px;
+}
+.title-item {
+	font-size: 22px;
+	border-bottom: 1px solid #EEE;
+}
+.title-description {
+	font-size: 12px;
+	margin: -5px 0 10px 0;
+}
+.temporada-heading {
+	background: #efefef;
+	padding: 10px;
+}
+.temporada-content {
+	
+}
+.temporada-item {
+	border-bottom: 1px solid #EEE;
+	padding: 10px;
+}

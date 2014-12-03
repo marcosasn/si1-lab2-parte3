@@ -7,31 +7,46 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Episodio {
+public class Episodio implements Comparable<Episodio> {
 	
 	@Id
     @GeneratedValue
     private Long idEpisodio;
 	
 	@ManyToOne
-	@JoinColumn(name="idTemporada")
-	private Temporada temporada;
+	@JoinColumn(name="idSerie")
+	private Serie serie;
 	
 	private boolean status;
 	private String nome;
 	private int numero;
+	private int temporada;
 	
-	public Episodio(String nome, int numero) {
+	public Episodio(String nome, int numero, int temporada, Serie serie) {
+		this(nome, numero, temporada);
+		this.serie = serie;
+	}
+	
+	public Episodio(String nome, int numero, int temporada) {
 		this.nome = nome;
 		this.status = false;
 		this.numero = numero;
-		this.temporada = new Temporada();
+		this.temporada = temporada;
+		this.serie = new Serie();
 	}
 	
 	public Episodio() {
 	}
 
 	
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
+	}
+
 	public int getNumero() {
 		return numero;
 	}
@@ -40,20 +55,21 @@ public class Episodio {
 		this.numero = numero;
 	}
 
-	public Temporada getTemporada() {
+	public int getTemporada() {
 		return temporada;
 	}
 
-	public void setTemporada(Temporada temporada) {
+	public void setTemporada(int temporada) {
 		this.temporada = temporada;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public boolean isAssistido() {
+		return this.status;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void mudaStatus() {
+		if(this.status) this.status = false;
+		else this.status = true;
 	}
 
 	public String getNome() {
@@ -64,8 +80,33 @@ public class Episodio {
 		this.nome = nome;
 	}
 
-	public Long getIdEpisodio() {
+	public Long getId() {
 		return idEpisodio;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Episodio)) {
+			return false;
+		}
+		Episodio temp = (Episodio) obj;
+		return this.nome.equals(temp.getNome());
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+
+	@Override
+	public int compareTo(Episodio episodio) {
+		if(this.temporada > episodio.getTemporada()) return -1;
+		if(this.temporada < episodio.getTemporada()) return 1;
+		return episodio.getNumero() - this.numero;
 	}
 
 }

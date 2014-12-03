@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,20 +11,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="serie")
-public class Serie {
+public class Serie implements Comparable<Serie> {
 	
 	@Id
     @GeneratedValue
     private Long idSerie;
 
 	private String nome;
+	private boolean status;
 	
 	@OneToMany(mappedBy = "serie")
-	private List<Temporada> temporadas;
+	private List<Episodio> episodios;
 		
 	public Serie(String nome) {
 		this.nome = nome;
-		this.temporadas = new ArrayList<Temporada>();
+		this.status = false;
+		this.episodios = new ArrayList<Episodio>();
 	}
 		
 	public Serie() {
@@ -38,16 +39,75 @@ public class Serie {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public List<Temporada> getTemporadas() {
-		return temporadas;
+	
+	public boolean isAssistindo() {
+		return status;
 	}
 
-	public void setTemporadas(List<Temporada> temporadas) {
-		this.temporadas = temporadas;
+	public void mudaStatus() {
+		if(this.status) this.status = false;
+		else this.status = true;
+	}
+	
+	public List<Integer> getTemporadas() {
+		List<Integer> result = new ArrayList<Integer>();
+		for (int i = 0; i < this.episodios.size(); i++) {
+			if(!result.contains(episodios.get(i).getTemporada())) result.add(episodios.get(i).getTemporada());
+		}
+		return result;
+	}
+	
+	public int getTotalDeTemporadas() {
+		return getTemporadas().size();
 	}
 
-	public Long getIdSerie() {
+	public void setEpisodios(List<Episodio> episodios) {
+		this.episodios = episodios;
+	}
+
+	public List<Episodio> getEpisodios() {
+		return this.episodios;
+	}
+	
+	public List<Episodio> getEpisodios(int temporada) {
+		List<Episodio> temp = new ArrayList<Episodio>();
+		for (int i = 0; i < this.episodios.size(); i++) {
+			if(episodios.get(i).getTemporada() == temporada) temp.add(episodios.get(i));
+		}
+		return temp;
+	}
+
+	public int getTotalDeEpisodios() {
+		return this.episodios.size();
+	}
+	
+	public int getTotalDeEpisodiosDaTemporada(int temporada) {
+		return getEpisodios(temporada).size();
+	}
+		
+	public int getTotalDeEpisodiosAssistidos() {
+		int cont = 0;
+		for (int i = 0; i < this.episodios.size(); i++) {
+			if(episodios.get(i).isAssistido()) cont++;
+		}
+		return cont;
+	}
+	
+	public int getTotalDeEpisodiosAssistir() {
+		return this.episodios.size() - getTotalDeEpisodiosAssistidos();
+	}
+	
+	public Episodio addEpisodio(String nome, int numero, int temporada) {
+		Episodio temp = new Episodio(nome, numero, temporada, this);
+		this.episodios.add(temp);
+		return temp;
+	}
+	
+	public void removeEpisodio(Episodio episodio) {
+		this.episodios.remove(episodio);
+	}
+	
+	public Long getId() {
 		return idSerie;
 	}
 	
@@ -67,5 +127,10 @@ public class Serie {
 		result = prime * result
 				+ ((nome == null) ? 0 : nome.hashCode());
 		return result;
+	}
+
+	@Override
+	public int compareTo(Serie serie) {
+		return this.nome.compareTo(serie.getNome());
 	}
 }
