@@ -49,6 +49,63 @@ public class Serie implements Comparable<Serie> {
 		else this.status = true;
 	}
 	
+	public boolean hasTemporadaAssistidaCompleta() {
+		for (int i = 1; i <= getTotalDeTemporadas(); i++) {
+			if(isTemporadaAssistidaCompleta(i)) return true;
+		}
+		return false;
+	}
+	
+	public boolean hasTemporadaAssistidaIncompleta() {
+		for (int i = 1; i <= getTotalDeTemporadas(); i++) {
+			if(isTemporadaAssistidaIncompleta(i)) return true;
+		}
+		return false;
+	}
+	
+	public boolean hasTemporadaNaoAssistida() {
+		for (int i = 1; i <= getTotalDeTemporadas(); i++) {
+			if(isTemporadaNaoAssistida(i)) return true;
+		}
+		return false;
+	}
+	public boolean isTemporadaAssistidaCompleta(int temporada) {
+		List<Episodio> temp = getEpisodios(temporada);
+		for (int i = 0; i < temp.size(); i++) {
+			if(!temp.get(i).isAssistido()) return false;
+		}
+		return true;
+	}
+	
+	public boolean isTemporadaAssistidaIncompleta(int temporada) {
+		if(isTemporadaAssistidaCompleta(temporada)) return false;
+		if(isTemporadaNaoAssistida(temporada)) return false;
+		return true;
+	}
+	
+	public boolean isTemporadaNaoAssistida(int temporada) {
+		List<Episodio> temp = getEpisodios(temporada);
+		for (int i = 0; i < temp.size(); i++) {
+			if(temp.get(i).isAssistido()) return false;
+		}
+		return true;
+	}
+	
+	public Episodio getProximoEpisodio(int temporada) {
+		List<Episodio> eps = getEpisodios(temporada);
+		int i = 0;
+		int index = -1;
+		while (i < eps.size()) {
+			if(eps.get(i).isAssistido()) {
+				index = i;
+			}
+			i++;
+		}
+		if(index == i-1) return null;
+		if(index == -1) return eps.get(0);
+		return eps.get(index+1);	
+	}
+	
 	public List<Integer> getTemporadas() {
 		List<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < this.episodios.size(); i++) {
@@ -111,24 +168,6 @@ public class Serie implements Comparable<Serie> {
 		return idSerie;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof Serie)) {
-			return false;
-		}
-		Serie temp = (Serie) obj;
-		return this.nome.equals(temp.getNome());
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((nome == null) ? 0 : nome.hashCode());
-		return result;
-	}
-
 	@Override
 	public int compareTo(Serie serie) {
 		return this.nome.compareTo(serie.getNome());

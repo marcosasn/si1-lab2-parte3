@@ -51,8 +51,9 @@ public class Application extends Controller {
 		
 		Episodio episodio = dao.findByEntityId(Episodio.class, id);
 		episodio.mudaStatus();
+		Long idSerie = episodio.getSerie().getId();
 
-        return redirect("/");
+        return redirect("/#serie-" + idSerie);
     }
 
 }

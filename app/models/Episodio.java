@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Episodio implements Comparable<Episodio> {
+public class Episodio {
 	
 	@Id
     @GeneratedValue
@@ -37,7 +37,6 @@ public class Episodio implements Comparable<Episodio> {
 	
 	public Episodio() {
 	}
-
 	
 	public Serie getSerie() {
 		return serie;
@@ -82,31 +81,6 @@ public class Episodio implements Comparable<Episodio> {
 
 	public Long getId() {
 		return idEpisodio;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof Episodio)) {
-			return false;
-		}
-		Episodio temp = (Episodio) obj;
-		return this.nome.equals(temp.getNome());
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((nome == null) ? 0 : nome.hashCode());
-		return result;
-	}
-
-	@Override
-	public int compareTo(Episodio episodio) {
-		if(this.temporada > episodio.getTemporada()) return -1;
-		if(this.temporada < episodio.getTemporada()) return 1;
-		return episodio.getNumero() - this.numero;
 	}
 
 }
