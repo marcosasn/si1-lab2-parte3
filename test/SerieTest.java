@@ -1,5 +1,4 @@
 import static org.junit.Assert.*;
-import models.Episodio;
 import models.Serie;
 
 import org.junit.Test;

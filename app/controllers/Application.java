@@ -40,7 +40,7 @@ public class Application extends Controller {
 		Serie serie = dao.findByEntityId(Serie.class, id);
 		serie.mudaStatus();
 
-        return redirect("/");
+        return redirect("/#serie-" + id);
     }
 	
 	@Transactional

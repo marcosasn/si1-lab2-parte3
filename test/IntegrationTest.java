@@ -8,7 +8,6 @@ import play.test.*;
 import play.libs.F.*;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
-import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 public class IntegrationTest {
 	
@@ -52,7 +51,7 @@ public class IntegrationTest {
 
                 result = Helpers.callAction(controllers.routes.ref.Application.mudarStatusDaSerie(), fakeRequest);
                 assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
-        		assertThat(redirectLocation(result)).isEqualTo("/");
+        		assertThat(redirectLocation(result)).isEqualTo("/#serie-20");
 
                 browser.goTo("http://localhost:3333");
                 assertThat(browser.pageSource()).doesNotContain("Nenhuma série acompanhada ainda");
@@ -73,7 +72,7 @@ public class IntegrationTest {
 
                 result = Helpers.callAction(controllers.routes.ref.Application.mudarStatusDaSerie(), fakeRequest);
                 assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
-        		assertThat(redirectLocation(result)).isEqualTo("/");
+        		assertThat(redirectLocation(result)).isEqualTo("/#serie-20");
 
                 browser.goTo("http://localhost:3333");
                 assertThat(browser.pageSource()).doesNotContain("Nenhuma série acompanhada ainda");
@@ -86,7 +85,7 @@ public class IntegrationTest {
 
                 result = Helpers.callAction(controllers.routes.ref.Application.mudarStatusDaSerie(), fakeRequest);
                 assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
-        		assertThat(redirectLocation(result)).isEqualTo("/");
+        		assertThat(redirectLocation(result)).isEqualTo("/#serie-20");
 
                 browser.goTo("http://localhost:3333");
                 assertThat(browser.pageSource()).contains("Nenhuma série acompanhada ainda");
@@ -106,11 +105,13 @@ public class IntegrationTest {
 
                 result = Helpers.callAction(controllers.routes.ref.Application.mudarStatusDaSerie(), fakeRequest);
                 assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
-        		assertThat(redirectLocation(result)).isEqualTo("/");
+        		assertThat(redirectLocation(result)).isEqualTo("/#serie-20");
 
                 browser.goTo("http://localhost:3333");
                 assertThat(browser.pageSource()).doesNotContain("Nenhuma série acompanhada ainda");
                 assertThat(browser.pageSource()).contains("2 Broke Girls");
+                assertThat(browser.pageSource()).contains("Temporadas Não Assistidas");
+                assertThat(browser.pageSource()).doesNotContain("Temporadas Assistidas Incompletas:");
                 
                 parameters = new HashMap<String, String>();
                 parameters.put("id", "2610");
@@ -119,10 +120,11 @@ public class IntegrationTest {
 
                 result = Helpers.callAction(controllers.routes.ref.Application.mudarStatusDoEpisodio(), fakeRequest);
                 assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
-        		assertThat(redirectLocation(result)).isEqualTo("/");
+        		assertThat(redirectLocation(result)).isEqualTo("/#serie-20");
 
                 browser.goTo("http://localhost:3333");
-                assertThat(browser.pageSource()).contains("Próximo episódio: And the Break-up Scene");
+                assertThat(browser.pageSource()).contains("And the Break-up Scene");
+                assertThat(browser.pageSource()).contains("Temporadas Assistidas Incompletas:");
                 assertThat(browser.pageSource()).contains("Assistido");
                 assertThat(browser.pageSource()).contains("Não Assisti");
                 
@@ -133,10 +135,10 @@ public class IntegrationTest {
 
                 result = Helpers.callAction(controllers.routes.ref.Application.mudarStatusDoEpisodio(), fakeRequest);
                 assertThat(status(result)).isEqualTo(Http.Status.SEE_OTHER);
-        		assertThat(redirectLocation(result)).isEqualTo("/");
+        		assertThat(redirectLocation(result)).isEqualTo("/#serie-20");
 
                 browser.goTo("http://localhost:3333");
-                assertThat(browser.pageSource()).doesNotContain("Próximo episódio: And the Break-up Scene");
+                assertThat(browser.pageSource()).doesNotContain("Temporadas Assistidas Completas:");
             }
         });
     }
