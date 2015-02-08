@@ -65,6 +65,15 @@
 						    <p class="title-item text-info">@serie.getNome</p>
 						    <p class="title-description">@serie.getTotalDeEpisodios() epis√≥dio(s), 
 						    @serie.getTotalDeEpisodiosAssistidos() assistido(s) e @serie.getTotalDeEpisodiosAssistir() a assistir</p>
+						    <!-- -- --Selecionar ˙ltimo episÛdio !----->
+						    <div class="input-group input-group">
+				  				<span class="input-group-addon">Ultimo epis√≥dio</span>
+				    			<select class="form-control" name="ultimoEpisodio">
+					  				<option>Mais antigo nao assistido</option>
+					  				<option>Mais antigo depois do ultimo assistido</option>
+				    			</select>
+				  			</div>
+						    <!------>
 						    @if(serie.hasTemporadaAssistidaCompleta) {
 							    <div class="panel panel-success">
 							    	<div class="panel-heading">Temporadas Assistidas Completas:</div>

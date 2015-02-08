@@ -6,6 +6,8 @@ import java.util.List;
 
 import models.Episodio;
 import models.GenericDAO;
+import models.MaisAntigoDepoisDoUltimoNaoAssistido;
+import models.MaisAntigoNaoAssistido;
 import models.Serie;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -28,7 +30,7 @@ public class Application extends Controller {
 		}
 		Collections.sort(seriesAssistir);
 		Collections.sort(seriesAssistindo);
-        return ok(index.render("Minhas Séries", seriesAssistir, seriesAssistindo));
+        return ok(index.render("Minhas Séries de TV", seriesAssistir, seriesAssistindo));
     }
 	
 	@Transactional
@@ -55,5 +57,21 @@ public class Application extends Controller {
 
         return redirect("/#serie-" + idSerie);
     }
+	
+	/*@Transactional
+	public static Result mudarUltimoEpisodio() {
+		DynamicForm requestData = Form.form().bindFromRequest();
+		String ultimoEpisodio = requestData.get("ultimoEpisodio");
+		Long idSerie = Long.parseLong(requestData.get("id"));
+		Serie serie = dao.findByEntityId(Serie.class, idSerie);
+		
+        if (ultimoEpisodio.equals("Mais antigo nao assistido")) {
+            serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
+        }
+        else {
+            serie.setSeletorProximoEpisodio(new MaisAntigoDepoisDoUltimoNaoAssistido());
+        }
+        return redirect("/#serie-" + idSerie);
+    }*/
 
 }

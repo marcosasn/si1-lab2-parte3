@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,11 +23,15 @@ public class Serie implements Comparable<Serie> {
 	
 	@OneToMany(mappedBy = "serie")
 	private List<Episodio> episodios;
+	
+	//@OneToOne
+	//private Object seletor;
 		
 	public Serie(String nome) {
 		this.nome = nome;
 		this.status = false;
 		this.episodios = new ArrayList<Episodio>();
+		//this.seletor = null;
 	}
 		
 	public Serie() {
@@ -92,6 +97,24 @@ public class Serie implements Comparable<Serie> {
 	}
 	
 	public Episodio getProximoEpisodio(int temporada) {
+		/*if (seletor != null) {
+			List<Episodio> eps = getEpisodios(temporada);
+			int i = 0;
+			int index = -1;
+			while (i < eps.size()) {
+				if(eps.get(i).isAssistido()) {
+					index = i;
+				}
+				i++;
+			}
+			if(index == i-1) return null;
+			if(index == -1) return eps.get(0);
+			return eps.get(index+1);
+		}
+		else {
+			//return seletor.selecionar(this);
+			return null;
+		}*/
 		List<Episodio> eps = getEpisodios(temporada);
 		int i = 0;
 		int index = -1;
@@ -103,7 +126,7 @@ public class Serie implements Comparable<Serie> {
 		}
 		if(index == i-1) return null;
 		if(index == -1) return eps.get(0);
-		return eps.get(index+1);	
+		return eps.get(index+1);
 	}
 	
 	public List<Integer> getTemporadas() {
@@ -190,4 +213,9 @@ public class Serie implements Comparable<Serie> {
 	public int compareTo(Serie serie) {
 		return this.nome.compareTo(serie.getNome());
 	}
+
+	/*public void setSeletorProximoEpisodio(
+			SeletorProximoEpisodio seletor) {
+		this.seletor = seletor;	
+	}*/
 }
