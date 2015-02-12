@@ -185,7 +185,9 @@ public class Serie implements Comparable<Serie> {
 	public int getTotalDeEpisodiosAssistidos() {
 		int cont = 0;
 		for (int i = 0; i < this.episodios.size(); i++) {
-			if(episodios.get(i).isAssistido()) cont++;
+			if(episodios.get(i).isAssistido()){
+				cont++;
+			}
 		}
 		return cont;
 	}
