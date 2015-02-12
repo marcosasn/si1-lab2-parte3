@@ -20,8 +20,12 @@ public class MaisAntigoNaoAssistido extends SeletorProximoEpisodio {
 			}
 			i++;
 		}
-		if(index == i-1) return null;
-		if(index == -1) return eps.get(0);
+		if(index == i-1){
+			return null;
+		}
+		if(index == -1){
+			return eps.get(0);
+		}
 		return eps.get(index+1);
 	}
 

@@ -24,10 +24,16 @@ public class Application extends Controller {
 		List<Serie> series = dao.findAllByClassName(Serie.class.getName());
 		List<Serie> seriesAssistir = new ArrayList<Serie>(); 
 		List<Serie> seriesAssistindo = new ArrayList<Serie>();
+		
 		for (int i = 0; i < series.size(); i++) {
-			if(series.get(i).isAssistindo()) seriesAssistindo.add(series.get(i));
-			else seriesAssistir.add(series.get(i));
+			if(series.get(i).isAssistindo()){
+				seriesAssistindo.add(series.get(i));
+			}
+			else{
+				seriesAssistir.add(series.get(i));
+			}
 		}
+		
 		Collections.sort(seriesAssistir);
 		Collections.sort(seriesAssistindo);
         return ok(index.render("Minhas Séries de TV", seriesAssistir, seriesAssistindo));
@@ -35,26 +41,22 @@ public class Application extends Controller {
 	
 	@Transactional
     public static Result mudarStatusDaSerie() {
-		
 		DynamicForm requestData = Form.form().bindFromRequest();
 		Long id = Long.parseLong(requestData.get("id"));
-		
+	
 		Serie serie = dao.findByEntityId(Serie.class, id);
 		serie.mudaStatus();
-
         return redirect("/#serie-" + id);
     }
 	
 	@Transactional
     public static Result mudarStatusDoEpisodio() {
-		
 		DynamicForm requestData = Form.form().bindFromRequest();
 		Long id = Long.parseLong(requestData.get("id"));
 		
 		Episodio episodio = dao.findByEntityId(Episodio.class, id);
 		episodio.mudaStatus();
 		Long idSerie = episodio.getSerie().getId();
-
         return redirect("/#serie-" + idSerie);
     }
 	
