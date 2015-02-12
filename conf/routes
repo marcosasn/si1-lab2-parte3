@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index()
 POST    /serie/status               controllers.Application.mudarStatusDaSerie()
+POST    /serie/change               controllers.Application.mudarUltimoEpisodio()
 POST    /episodio/status            controllers.Application.mudarStatusDoEpisodio()
 
 # Map static resources from the /public folder to the /assets URL path

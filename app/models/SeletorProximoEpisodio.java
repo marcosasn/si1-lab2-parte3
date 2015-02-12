@@ -1,7 +1,15 @@
 package models;
 
-public interface SeletorProximoEpisodio {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+public abstract class SeletorProximoEpisodio {
 	
-	Episodio selecionar(Serie serie);
+	@Id
+    @GeneratedValue
+    private Long idSeletorProximoEpisodio;
 	
+	public abstract Episodio selecionar(Serie serie, int temporada);
 }

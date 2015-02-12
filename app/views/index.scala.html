@@ -66,13 +66,28 @@
 						    <p class="title-description">@serie.getTotalDeEpisodios() epis贸dio(s), 
 						    @serie.getTotalDeEpisodiosAssistidos() assistido(s) e @serie.getTotalDeEpisodiosAssistir() a assistir</p>
 						    <!-- -- --Selecionar 鷏timo epis骴io !----->
-						    <div class="input-group input-group">
-				  				<span class="input-group-addon">Ultimo epis贸dio</span>
-				    			<select class="form-control" name="ultimoEpisodio">
-					  				<option>Mais antigo nao assistido</option>
-					  				<option>Mais antigo depois do ultimo assistido</option>
-				    			</select>
-				  			</div>
+						    
+						    
+						    <div class="panel panel-warning" id="serie-@serie.getId">
+							    	<div class="panel-heading">Selecionar pr贸ximo epis贸dio:</div>
+							    	<div class="panel-body">
+									   <form class="pull-right" method="post" action="/serie/change">
+										    <div class="input-group input-group">
+								  				<span class="input-group-addon">Ultimo epis贸dio</span>
+								    			<select class="form-control" name="ultimoEpisodio">
+									  				<option>Mais antigo nao assistido</option>
+									  				<option>Mais antigo depois do ultimo assistido</option>
+								    			</select>
+										    </div>
+							  				<input type="hidden" name="id" value="@serie.getId">
+										    <button type="submit" class="btn btn-primary btn-xs">
+												<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Mudar
+										    </button>
+										    <br>
+										</form> 
+									</div>
+							    </div>
+						    
 						    <!------>
 						    @if(serie.hasTemporadaAssistidaCompleta) {
 							    <div class="panel panel-success">

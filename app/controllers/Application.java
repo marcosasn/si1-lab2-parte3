@@ -58,20 +58,22 @@ public class Application extends Controller {
         return redirect("/#serie-" + idSerie);
     }
 	
-	/*@Transactional
+	@Transactional
 	public static Result mudarUltimoEpisodio() {
 		DynamicForm requestData = Form.form().bindFromRequest();
 		String ultimoEpisodio = requestData.get("ultimoEpisodio");
 		Long idSerie = Long.parseLong(requestData.get("id"));
+		
 		Serie serie = dao.findByEntityId(Serie.class, idSerie);
 		
         if (ultimoEpisodio.equals("Mais antigo nao assistido")) {
             serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
         }
-        else {
+        else if (ultimoEpisodio.equals("Mais antigo depois do ultimo assistido")) {
             serie.setSeletorProximoEpisodio(new MaisAntigoDepoisDoUltimoNaoAssistido());
         }
+        
         return redirect("/#serie-" + idSerie);
-    }*/
+    }
 
 }
