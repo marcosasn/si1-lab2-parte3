@@ -69,15 +69,23 @@
 						    
 						    
 						    <div class="panel panel-warning" id="serie-@serie.getId">
-							    	<div class="panel-heading">Selecionar pr贸ximo epis贸dio:</div>
+							    	<div class="panel-heading">Mostrar pr贸ximo epis贸dio:</div>
 							    	<div class="panel-body">
 									   	<form method="POST" action="/serie/change">
 						    	    		<input type="hidden" name="id" value="@serie.getId" />
-								   			<input type="radio" name="recomendar" value="1" @if(serie.getRecomendacao() == 1) { checked } > Recomendar pelo epis贸dio mais antigo</input><br/>
-								   			<input type="radio" name="recomendar" value="2" @if(serie.getRecomendacao() == 2) { checked } > Recomendar pelo epis贸dio seguinte</input> </br>
-											<input type="radio" name="recomendar" value="3" @if(serie.getRecomendacao() == 3) { checked } > Recomendar epis贸dio mais antigo antes de tr阺 seguidos assistidos</input>
-						    	   			<br/>
-						    	   			<center><input type="submit" value="OK" class="btn btn-success" /></center>
+								   			<input type="radio" name="recomendar" value="1" @if(serie.getRecomendacao() == 1) { 
+								   																checked 
+								   															} > Mais antigo</input>
+								   															<br/>
+								   			<input type="radio" name="recomendar" value="2" @if(serie.getRecomendacao() == 2) {
+								   																checked 
+								   															} > Seguinte</input>
+								   															</br>
+											<input type="radio" name="recomendar" value="3" @if(serie.getRecomendacao() == 3) {
+																								checked 
+																							} > Mais antigo antes de 3 seguidos assistidos</input>
+						    	   															<br/>
+						    	   			<center><input type="submit" value="Mostrar" class="btn btn-primary btn-xs" /></center>
 						    	   		</form> 
 									</div>
 							    </div>

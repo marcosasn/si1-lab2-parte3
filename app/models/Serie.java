@@ -10,14 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import models.seletor.MaisAntigoNaoAssistido;
 import models.seletor.MaisAntigoNecessario;
 import models.seletor.ProximoNaoAssistido;
 import models.seletor.SeletorProximoEpisodio;
-
-import play.data.validation.Constraints.Required;
 
 @Entity
 @Table(name="serie")
@@ -36,25 +33,10 @@ public class Serie implements Comparable<Serie> {
 	@OneToOne(cascade=CascadeType.PERSIST)
 	private SeletorProximoEpisodio seletor;
 	
-	public void setSeletorProximoEpisodio(SeletorProximoEpisodio seletor) {
-		this.seletor = seletor;	
-	}
+	public static final int MAIS_ANTIGO = 1;
+	public static final int PROXIMO = 2;
+	public static final int MAIS_ANTIGO_NECESSARIO = 3;
 	
-	public SeletorProximoEpisodio getSeletorProximoEpisodio() {
-		return seletor;
-	}
-	
-	public int getRecomendacao() {
-		if (seletor instanceof MaisAntigoNaoAssistido) {
-			return 1;
-		} else if (seletor instanceof ProximoNaoAssistido) {
-			return 2;
-		} else if (seletor instanceof MaisAntigoNecessario) {
-			return 3;
-		}
-		return -1;
-	}
-		
 	public Serie() {}
 	
 	public Serie(String nome) {
@@ -235,5 +217,24 @@ public class Serie implements Comparable<Serie> {
 	@Override
 	public int compareTo(Serie serie) {
 		return this.nome.compareTo(serie.getNome());
+	}
+	
+	public void setSeletorProximoEpisodio(SeletorProximoEpisodio seletor) {
+		this.seletor = seletor;	
+	}
+	
+	public SeletorProximoEpisodio getSeletorProximoEpisodio() {
+		return seletor;
+	}
+	
+	public int getRecomendacao() {
+		if (seletor instanceof MaisAntigoNaoAssistido) {
+			return MAIS_ANTIGO;
+		} else if (seletor instanceof ProximoNaoAssistido) {
+			return PROXIMO;
+		} else if (seletor instanceof MaisAntigoNecessario) {
+			return MAIS_ANTIGO_NECESSARIO;
+		}
+		return -1;
 	}
 }

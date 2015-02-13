@@ -19,7 +19,7 @@ import views.html.*;
 public class Application extends Controller {
 	
 	private static GenericDAO dao = new GenericDAO();
-
+	
 	@Transactional
     public static Result index() {
 		List<Serie> series = dao.findAllByClassName(Serie.class.getName());
@@ -65,30 +65,28 @@ public class Application extends Controller {
 	public static Result mudarUltimoEpisodio() {
 		DynamicForm requestData = Form.form().bindFromRequest();
 		Long idSerie = Long.parseLong(requestData.get("id"));
-		
 		Serie serie = dao.findByEntityId(Serie.class, idSerie);
 		Integer valor = Integer.parseInt(requestData.get("recomendar"));
 		
 		switch (valor){
-		case 1:
-			if (serie.getRecomendacao() != 1) {
+		case Serie.MAIS_ANTIGO:
+			if (serie.getRecomendacao() != Serie.MAIS_ANTIGO) {
 				serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
 			}
 			break;
-		case 2:
-			if (serie.getRecomendacao() != 2) {
+		case Serie.PROXIMO:
+			if (serie.getRecomendacao() != Serie.PROXIMO) {
 				serie.setSeletorProximoEpisodio(new ProximoNaoAssistido());
 			}
 			break;
-		case 3:
-			if (serie.getRecomendacao() != 3) {
+		case Serie.MAIS_ANTIGO_NECESSARIO:
+			if (serie.getRecomendacao() != Serie.MAIS_ANTIGO_NECESSARIO) {
 				serie.setSeletorProximoEpisodio(new MaisAntigoNecessario());
 			}
 			break;
 		default:
 			serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
 		}
-		
 		return redirect("/#serie-" + idSerie);
     }
 
