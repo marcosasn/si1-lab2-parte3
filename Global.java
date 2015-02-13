@@ -4,7 +4,7 @@ import java.util.List;
 
 import au.com.bytecode.opencsv.CSVReader;
 import models.Episodio;
-import models.GenericDAO;
+import models.bd.GenericDAO;
 import models.Serie;
 import play.*;
 import play.db.jpa.JPA;

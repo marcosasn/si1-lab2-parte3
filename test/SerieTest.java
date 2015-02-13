@@ -1,8 +1,8 @@
 import static org.junit.Assert.*;
-import models.ProximoNaoAssistido;
-import models.MaisAntigoNaoAssistido;
-import models.SeletorProximoEpisodio;
 import models.Serie;
+import models.seletor.MaisAntigoNaoAssistido;
+import models.seletor.ProximoNaoAssistido;
+import models.seletor.SeletorProximoEpisodio;
 
 import org.junit.Test;
 

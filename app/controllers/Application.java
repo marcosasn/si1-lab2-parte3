@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import models.Episodio;
-import models.GenericDAO;
-import models.ProximoNaoAssistido;
-import models.MaisAntigoNaoAssistido;
 import models.Serie;
+import models.bd.GenericDAO;
+import models.seletor.MaisAntigoNaoAssistido;
+import models.seletor.MaisAntigoNecessario;
+import models.seletor.ProximoNaoAssistido;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -79,9 +80,11 @@ public class Application extends Controller {
 				serie.setSeletorProximoEpisodio(new ProximoNaoAssistido());
 			}
 			break;
-		//case 3:
-			//serie.setSeletorProximoEpisodio(null);
-			//break;
+		case 3:
+			if (serie.getRecomendacao() != 3) {
+				serie.setSeletorProximoEpisodio(new MaisAntigoNecessario());
+			}
+			break;
 		default:
 			serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
 		}

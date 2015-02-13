@@ -12,6 +12,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import models.seletor.MaisAntigoNaoAssistido;
+import models.seletor.MaisAntigoNecessario;
+import models.seletor.ProximoNaoAssistido;
+import models.seletor.SeletorProximoEpisodio;
+
 import play.data.validation.Constraints.Required;
 
 @Entity
@@ -44,6 +49,8 @@ public class Serie implements Comparable<Serie> {
 			return 1;
 		} else if (seletor instanceof ProximoNaoAssistido) {
 			return 2;
+		} else if (seletor instanceof MaisAntigoNecessario) {
+			return 3;
 		}
 		return -1;
 	}
