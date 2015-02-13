@@ -71,20 +71,14 @@
 						    <div class="panel panel-warning" id="serie-@serie.getId">
 							    	<div class="panel-heading">Selecionar prÃ³ximo episÃ³dio:</div>
 							    	<div class="panel-body">
-									   <form class="pull-right" method="post" action="/serie/change">
-										    <div class="input-group input-group">
-								  				<span class="input-group-addon">Ultimo episÃ³dio</span>
-								    			<select class="form-control" name="ultimoEpisodio">
-									  				<option>Mais antigo nao assistido</option>
-									  				<option>Mais antigo depois do ultimo assistido</option>
-								    			</select>
-										    </div>
-							  				<input type="hidden" name="id" value="@serie.getId">
-										    <button type="submit" class="btn btn-primary btn-xs">
-												<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Mudar
-										    </button>
-										    <br>
-										</form> 
+									   	<form method="POST" action="/serie/change">
+						    	    		<input type="hidden" name="id" value="@serie.getId" />
+								   			<input type="radio" name="recomendar" value="1" @if(serie.getRecomendacao() == 1) { checked } > Recomendar pelo episódio mais antigo</input><br/>
+								   			<input type="radio" name="recomendar" value="2" @if(serie.getRecomendacao() == 2) { checked } > Recomendar pelo episódio seguinte</input> </br>
+											<input type="radio" name="recomendar" value="3" @if(serie.getRecomendacao() == 3) { checked } > Recomendar episódio mais antigo antes de três seguidos assistidos</input>
+						    	   			<br/>
+						    	   			<center><input type="submit" value="OK" class="btn btn-success" /></center>
+						    	   		</form> 
 									</div>
 							    </div>
 						    

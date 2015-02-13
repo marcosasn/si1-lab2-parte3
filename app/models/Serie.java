@@ -5,13 +5,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import play.data.validation.Constraints.Required;
 
 @Entity
 @Table(name="serie")
@@ -27,19 +28,35 @@ public class Serie implements Comparable<Serie> {
 	@OneToMany(mappedBy = "serie")
 	private List<Episodio> episodios;
 	
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinColumn
+	@OneToOne(cascade=CascadeType.PERSIST)
 	private SeletorProximoEpisodio seletor;
+	
+	public void setSeletorProximoEpisodio(SeletorProximoEpisodio seletor) {
+		this.seletor = seletor;	
+	}
+	
+	public SeletorProximoEpisodio getSeletorProximoEpisodio() {
+		return seletor;
+	}
+	
+	public int getRecomendacao() {
+		if (seletor instanceof MaisAntigoNaoAssistido) {
+			return 1;
+		} else if (seletor instanceof ProximoNaoAssistido) {
+			return 2;
+		}
+		return -1;
+	}
 		
+	public Serie() {}
+	
 	public Serie(String nome) {
 		this.nome = nome;
 		this.status = false;
+		this.seletor = new MaisAntigoNaoAssistido();
 		this.episodios = new ArrayList<Episodio>();
 	}
-		
-	public Serie() {
-	}
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -119,27 +136,7 @@ public class Serie implements Comparable<Serie> {
 	}
 	
 	public Episodio getProximoEpisodio(int temporada) {
-		if(seletor != null) {
-			return seletor.selecionar(this, temporada);
-		}
-		else {
-			List<Episodio> eps = this.getEpisodios(temporada);
-			int i = 0;
-			int index = -1;
-			while (i < eps.size()) {
-				if(eps.get(i).isAssistido()) {
-					index = i;
-				}
-				i++;
-			}
-			if(index == i-1){
-				return null;
-			}
-			if(index == -1){
-				return eps.get(0);
-			}
-			return eps.get(index+1);
-		}
+		return seletor.selecionar(this, temporada);
 	}
 	
 	public List<Integer> getTemporadas() {
@@ -231,9 +228,5 @@ public class Serie implements Comparable<Serie> {
 	@Override
 	public int compareTo(Serie serie) {
 		return this.nome.compareTo(serie.getNome());
-	}
-
-	public void setSeletorProximoEpisodio(SeletorProximoEpisodio seletor) {
-		this.seletor = seletor;	
 	}
 }

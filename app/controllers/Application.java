@@ -6,7 +6,7 @@ import java.util.List;
 
 import models.Episodio;
 import models.GenericDAO;
-import models.MaisAntigoDepoisDoUltimoNaoAssistido;
+import models.ProximoNaoAssistido;
 import models.MaisAntigoNaoAssistido;
 import models.Serie;
 import play.data.DynamicForm;
@@ -63,19 +63,30 @@ public class Application extends Controller {
 	@Transactional
 	public static Result mudarUltimoEpisodio() {
 		DynamicForm requestData = Form.form().bindFromRequest();
-		String ultimoEpisodio = requestData.get("ultimoEpisodio");
 		Long idSerie = Long.parseLong(requestData.get("id"));
 		
 		Serie serie = dao.findByEntityId(Serie.class, idSerie);
+		Integer valor = Integer.parseInt(requestData.get("recomendar"));
 		
-        if (ultimoEpisodio.equals("Mais antigo nao assistido")) {
-            serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
-        }
-        else if (ultimoEpisodio.equals("Mais antigo depois do ultimo assistido")) {
-            serie.setSeletorProximoEpisodio(new MaisAntigoDepoisDoUltimoNaoAssistido());
-        }
-        
-        return redirect("/#serie-" + idSerie);
+		switch (valor){
+		case 1:
+			if (serie.getRecomendacao() != 1) {
+				serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
+			}
+			break;
+		case 2:
+			if (serie.getRecomendacao() != 2) {
+				serie.setSeletorProximoEpisodio(new ProximoNaoAssistido());
+			}
+			break;
+		//case 3:
+			//serie.setSeletorProximoEpisodio(null);
+			//break;
+		default:
+			serie.setSeletorProximoEpisodio(new MaisAntigoNaoAssistido());
+		}
+		
+		return redirect("/#serie-" + idSerie);
     }
 
 }

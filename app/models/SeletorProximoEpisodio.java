@@ -9,7 +9,17 @@ public abstract class SeletorProximoEpisodio {
 	
 	@Id
     @GeneratedValue
-    private Long idSeletorProximoEpisodio;
+    private Long id;
+	
+	public SeletorProximoEpisodio() {}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public abstract Episodio selecionar(Serie serie, int temporada);
 }

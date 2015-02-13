@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+import models.ProximoNaoAssistido;
+import models.MaisAntigoNaoAssistido;
+import models.SeletorProximoEpisodio;
 import models.Serie;
 
 import org.junit.Test;
@@ -150,4 +153,14 @@ public class SerieTest {
 		assertTrue(serie.isTemporadaAssistidaIncompleta(1));
 		assertTrue(serie.isTemporadaNaoAssistida(2));
 	}
+	
+	@Test
+	public void testSeletorUltimoEpisodio() {
+		/*Serie serie = new Serie("serie A");
+		serie.addEpisodio("Episodio 1", 1, 1);
+		serie.addEpisodio("Episodio 2", 2, 1);
+		serie.getEpisodios().get(0).mudaStatus();
+		
+		assertEquals(serie.getProximoEpisodio(0),serie.getEpisodios().get(1));
+*/	}
 }
