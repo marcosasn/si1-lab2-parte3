@@ -30,24 +30,53 @@ public class MaisAntigoNaoAssistidoTest {
 	}
 
 	@Test
-	public void testMaisAntigoNaoAssistido() {
+	public void testMaisAntigoNaoAssistidoPrimeiraTemporada() {
 		assertEquals(serie.getProximoEpisodio(1),new Episodio("Episodio 1", 1, 1));
 		assertEquals(serie.getEpisodios(1).get(0),new Episodio("Episodio 1", 1, 1));
 		serie.getEpisodios(1).get(0).mudaStatus();
 		assertTrue(serie.getEpisodios(1).get(0).isAssistido());
 		assertEquals(serie.getProximoEpisodio(1),new Episodio("Episodio 2", 2, 1));
 		
+		serie.getEpisodios(1).get(2).mudaStatus();
+		assertTrue(serie.getEpisodios(1).get(2).isAssistido());
+		assertEquals(serie.getProximoEpisodio(1),new Episodio("Episodio 2", 2, 1));
 		
+		serie.getEpisodios(1).get(0).mudaStatus();
+		assertFalse(serie.getEpisodios(1).get(0).isAssistido());
+		assertEquals(serie.getProximoEpisodio(1),new Episodio("Episodio 1", 1, 1));
+	}
+	
+	@Test
+	public void testMaisAntigoNaoAssistidoSegundaTemporada() {
 		assertEquals(serie.getProximoEpisodio(2),new Episodio("Episodio 1", 1, 2));
 		assertEquals(serie.getEpisodios(2).get(0),new Episodio("Episodio 1", 1, 2));
 		serie.getEpisodios(2).get(0).mudaStatus();
 		assertTrue(serie.getEpisodios(2).get(0).isAssistido());
 		assertEquals(serie.getProximoEpisodio(2),new Episodio("Episodio 2", 2, 2));
 		
+		serie.getEpisodios(2).get(3).mudaStatus();
+		assertTrue(serie.getEpisodios(2).get(3).isAssistido());
+		assertEquals(serie.getProximoEpisodio(2),new Episodio("Episodio 2", 2, 1));
+		
+		serie.getEpisodios(2).get(0).mudaStatus();
+		assertFalse(serie.getEpisodios(2).get(0).isAssistido());
+		assertEquals(serie.getProximoEpisodio(2),new Episodio("Episodio 1", 1, 2));	
+	}
+	
+	@Test
+	public void testMaisAntigoNaoAssistidoTerceiraTemporada() {
 		assertEquals(serie.getProximoEpisodio(3),new Episodio("Episodio 1", 1, 3));
 		assertEquals(serie.getEpisodios(3).get(0),new Episodio("Episodio 1", 1, 3));
 		serie.getEpisodios(3).get(0).mudaStatus();
 		assertTrue(serie.getEpisodios(3).get(0).isAssistido());
 		assertEquals(serie.getProximoEpisodio(3),new Episodio("Episodio 2", 2, 3));
+		
+		serie.getEpisodios(3).get(2).mudaStatus();
+		assertTrue(serie.getEpisodios(3).get(2).isAssistido());
+		assertEquals(serie.getProximoEpisodio(3),new Episodio("Episodio 2", 2, 3));
+		
+		serie.getEpisodios(3).get(0).mudaStatus();
+		assertFalse(serie.getEpisodios(3).get(0).isAssistido());
+		assertEquals(serie.getProximoEpisodio(3),new Episodio("Episodio 1", 1, 3));	
 	}
 }
