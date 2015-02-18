@@ -116,5 +116,12 @@ public class Episodio implements Comparable<Episodio> {
 		}
 		return episodio.getNumero() - this.numero;
 	}
-
+	
+	@Override
+	public String toString() {
+		return  "Nome: " + nome + " " +
+				"Número: " + numero + " " +
+				"Temporada: " + temporada + " " +
+				"Status: " + status;
+	}
 }

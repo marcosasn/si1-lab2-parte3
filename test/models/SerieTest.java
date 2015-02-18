@@ -1,3 +1,4 @@
+package models;
 import static org.junit.Assert.*;
 import models.Serie;
 import models.seletor.MaisAntigoNaoAssistido;

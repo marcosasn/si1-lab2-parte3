@@ -1,3 +1,4 @@
+package seletor;
 import static org.junit.Assert.*;
 
 import models.Episodio;
